@@ -1,5 +1,5 @@
 {
-  "name": "crmclient",
+  "name": "CRMClient",
   "version": "0.1.0",
   "private": true,
   "scripts": {
@@ -15,9 +15,15 @@
     "@types/react-dom": "18.0.10",
     "eslint": "8.32.0",
     "eslint-config-next": "13.1.5",
+    "formik": "^2.2.9",
     "next": "13.1.5",
+    "normalize.css": "^8.0.1",
     "react": "18.2.0",
     "react-dom": "18.2.0",
-    "typescript": "4.9.4"
+    "typescript": "4.9.4",
+    "yup": "^0.32.11"
+  },
+  "devDependencies": {
+    "tailwindcss": "^3.2.4"
   }
 }
