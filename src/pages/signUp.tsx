@@ -1,23 +1,79 @@
-import React from "react";
-import Layout from "./components/layout";
-import { Formik, Form, Field } from "formik";
+import React, { useState, useEffect } from "react";
+import { useRouter } from "next/router";
+import { Formik } from "formik";
+import { useMutation, gql } from "@apollo/client";
 import * as Yup from "yup";
+import Swal from "sweetalert2";
+
+import { NewUserType } from "@/types/newUser.type";
+
+import Layout from "../components/layout";
+import FormSignUp from "@/components/formSignUp";
+
+const MUTATION_NEW_USER = gql`
+  mutation NewUser($input: userInput) {
+    newUser(input: $input) {
+      id
+      name
+      lastName
+      email
+      password
+    }
+  }
+`;
+
+const signUpSchema = Yup.object().shape({
+  name: Yup.string()
+    .min(2, "Too Short!")
+    .max(20, "Too Long!")
+    .required("Required"),
+  lastName: Yup.string()
+    .min(2, "Too Short!")
+    .max(20, "Too Long!")
+    .required("Required"),
+  email: Yup.string().email("Invalid email").required("Required"),
+  password: Yup.string()
+    .min(2, "Too Short!")
+    .max(10, "Too Long!")
+    .required("Required"),
+});
+
 export default function SignUp() {
-  const SignupSchema = Yup.object().shape({
-    name: Yup.string()
-      .min(2, "Too Short!")
-      .max(20, "Too Long!")
-      .required("Required"),
-    lastName: Yup.string()
-      .min(2, "Too Short!")
-      .max(20, "Too Long!")
-      .required("Required"),
-    email: Yup.string().email("Invalid email").required("Required"),
-    password: Yup.string()
-      .min(2, "Too Short!")
-      .max(10, "Too Long!")
-      .required("Required"),
-  });
+  const [user, setUser] = useState();
+  const [newUser] = useMutation(MUTATION_NEW_USER);
+  const router = useRouter();
+
+  const saveUser = async (dataUser: NewUserType) => {
+    try {
+      const { data } = await newUser({
+        variables: {
+          input: dataUser,
+        },
+      });
+      setUser(data);
+    } catch (error: any) {
+      Swal.fire({
+        icon: "error",
+        title: "Oops...",
+        text: error.message,
+      });
+    }
+  };
+
+  useEffect(() => {
+    if (user != null) {
+      Swal.fire({
+        width: "300px",
+        position: "top-end",
+        icon: "success",
+        title: "The user was create it",
+        showConfirmButton: false,
+        timer: 1000,
+      });
+      router.push("/login");
+    }
+  }, [user]);
+
   return (
     <>
       <Layout>
@@ -32,79 +88,11 @@ export default function SignUp() {
                   email: "",
                   password: "",
                 }}
-                validationSchema={SignupSchema}
-                onSubmit={(values) => {
-                  // same shape as initial values
-                  console.log(values);
-                }}
+                validationSchema={signUpSchema}
+                onSubmit={saveUser}
               >
                 {({ errors, touched }) => (
-                  <Form className="bg-slate-200 rounded-3xl shadow-md px-8 pt-6 pb-8 mb-4">
-                    <div>
-                      <label
-                        htmlFor="name"
-                        className="block text-slate-700 text-sm font-bold mb-2"
-                      >
-                        Name
-                      </label>
-                      <Field
-                        name="name"
-                        className="shadow appearance-none border rounded w-full py-2 px-3 text-slate-700 leading-tight focus:shadow-outline"
-                      />
-                      {errors.name && touched.name ? (
-                        <div>{errors.name}</div>
-                      ) : null}
-
-                      <label
-                        htmlFor="lastName"
-                        className="block text-slate-700 text-sm font-bold mb-2"
-                      >
-                        Last name
-                      </label>
-                      <Field
-                        name="lastName"
-                        className="shadow appearance-none border rounded w-full py-2 px-3 text-slate-700 leading-tight focus:shadow-outline"
-                      />
-                      {errors.name && touched.lastName ? (
-                        <div>{errors.lastName}</div>
-                      ) : null}
-                      <label
-                        htmlFor="email"
-                        className="block text-slate-700 text-sm font-bold mb-2"
-                      >
-                        Email
-                      </label>
-                      <Field
-                        name="email"
-                        type="email"
-                        className="shadow appearance-none border rounded w-full py-2 px-3 text-slate-700 leading-tight focus:shadow-outline"
-                      />
-                      {errors.email && touched.email ? (
-                        <div>{errors.email}</div>
-                      ) : null}
-                      <label
-                        htmlFor="password"
-                        className="block text-slate-700 text-sm font-bold mb-2"
-                      >
-                        Password
-                      </label>
-                      <Field
-                        name="password"
-                        type="password"
-                        className="shadow appearance-none border rounded w-full py-2 px-3 text-slate-700 leading-tight focus:shadow-outline"
-                      />
-                      {errors.password && touched.password ? (
-                        <div>{errors.password}</div>
-                      ) : null}
-
-                      <button
-                        className="bg-slate-600 w-full mt-5 p-2 text-white hover:bg-slate-800"
-                        type="submit"
-                      >
-                        Create account
-                      </button>
-                    </div>
-                  </Form>
+                  <FormSignUp errors={errors} touched={touched}></FormSignUp>
                 )}
               </Formik>
             </div>

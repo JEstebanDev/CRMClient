@@ -1,4 +1,4 @@
-import Layout from "@/pages/components/layout";
+import Layout from "@/components/layout";
 import React from "react";
 
 export default function product() {

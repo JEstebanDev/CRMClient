@@ -1,20 +1,62 @@
-import React from "react";
-import Layout from "./components/layout";
-import { Formik, Form, Field } from "formik";
+import React, { useState } from "react";
+import { useMutation, gql } from "@apollo/client";
 import * as Yup from "yup";
-export default function Login() {
-  const loginSchema = Yup.object().shape({
-    email: Yup.string()
-      .min(2, "Too Short!")
-      .max(20, "Too Long!")
-      .email("Invalid email")
-      .required("Required"),
-    password: Yup.string()
-      .min(2, "Too Short!")
-      .max(10, "Too Long!")
-      .required("Required"),
-  });
+import { Formik } from "formik";
 
+import Layout from "../components/layout";
+import { useRouter } from "next/router";
+import FormLogin from "@/components/formLogin";
+import { LoginType } from "@/types/login.type";
+import Swal from "sweetalert2";
+
+const MUTATION_AUTH = gql`
+  mutation AuthenticUser($input: authUserInput) {
+    authenticUser(input: $input) {
+      token
+    }
+  }
+`;
+
+const loginSchema = Yup.object().shape({
+  email: Yup.string()
+    .min(2, "Too Short!")
+    .max(20, "Too Long!")
+    .email("Invalid email")
+    .required("Required"),
+  password: Yup.string()
+    .min(2, "Too Short!")
+    .max(10, "Too Long!")
+    .required("Required"),
+});
+
+export default function Login() {
+  const [authenticUser] = useMutation(MUTATION_AUTH);
+  const router = useRouter();
+  const loginUser = async (dataLogin: LoginType) => {
+    try {
+      const { data } = await authenticUser({
+        variables: {
+          input: dataLogin,
+        },
+      });
+      Swal.fire({
+        width: "300px",
+        position: "top-end",
+        icon: "success",
+        title: "Login successfully",
+        showConfirmButton: false,
+        timer: 1000,
+      });
+      localStorage.setItem("token", data.authenticUser.token);
+      router.push("/client");
+    } catch (error: any) {
+      Swal.fire({
+        icon: "error",
+        title: "Oops...",
+        text: error.message,
+      });
+    }
+  };
   return (
     <>
       <Layout>
@@ -28,57 +70,10 @@ export default function Login() {
                   password: "",
                 }}
                 validationSchema={loginSchema}
-                onSubmit={(values) => {
-                  // same shape as initial values
-                  console.log(values);
-                }}
+                onSubmit={loginUser}
               >
                 {({ errors, touched }) => (
-                  <Form
-                    action=""
-                    className="bg-slate-200 rounded-3xl shadow-md px-8 pt-6 pb-8 mb-4"
-                  >
-                    <div>
-                      <label
-                        htmlFor="email"
-                        className="block text-slate-700 text-sm font-bold mb-2"
-                      >
-                        Email
-                      </label>
-                      <Field
-                        name="email"
-                        type="email"
-                        className="shadow appearance-none border rounded w-full py-2 px-3 text-slate-700 leading-tight focus:shadow-outline"
-                        placeholder="example@jestebandev.com"
-                      />
-                      {errors.email && touched.email ? (
-                        <div>{errors.email}</div>
-                      ) : null}
-
-                      <label
-                        htmlFor="password"
-                        className="block text-slate-700 text-sm font-bold mb-2"
-                      >
-                        Password
-                      </label>
-
-                      <Field
-                        name="password"
-                        type="password"
-                        className="shadow appearance-none border rounded w-full py-2 px-3 text-slate-700 leading-tight focus:shadow-outline"
-                        placeholder="password"
-                      />
-                      {errors.password && touched.password ? (
-                        <div>{errors.password}</div>
-                      ) : null}
-
-                      <input
-                        className="bg-slate-600 w-full mt-5 p-2 text-white hover:bg-slate-800"
-                        type="submit"
-                        value="Login"
-                      />
-                    </div>
-                  </Form>
+                  <FormLogin errors={errors} touched={touched} />
                 )}
               </Formik>
             </div>
