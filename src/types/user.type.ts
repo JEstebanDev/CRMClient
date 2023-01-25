@@ -13,3 +13,9 @@ export type FormProps = {
     password: string;
   }>;
 };
+export type NewUserType = {
+  name: string;
+  lastName: string;
+  email: string;
+  password: string;
+};

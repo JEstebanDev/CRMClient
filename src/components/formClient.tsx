@@ -1,11 +1,14 @@
-import React from "react";
+import { NewClientProps } from "@/types/client.type";
 import { Form, Field } from "formik";
+import React from "react";
 import ErrorSpan from "./errorSpan";
-import { FormProps } from "@/types/newUserProps.type";
 
-export default function FormSignUp({ errors, touched }: FormProps) {
+export default function FormClient({ errors, touched }: NewClientProps) {
   return (
-    <Form className="bg-slate-200 rounded-3xl shadow-md px-8 pt-6 pb-8 mb-4">
+    <Form
+      action=""
+      className="bg-slate-100 rounded-3xl shadow-md px-8 pt-6 pb-8 mb-4"
+    >
       <div>
         <label
           htmlFor="name"
@@ -15,7 +18,9 @@ export default function FormSignUp({ errors, touched }: FormProps) {
         </label>
         <Field
           name="name"
+          type="text"
           className="shadow appearance-none border rounded w-full py-2 px-3 text-slate-700 leading-tight focus:shadow-outline"
+          placeholder="Juan"
         />
         {errors.name && touched.name ? <ErrorSpan name={errors.name} /> : null}
 
@@ -23,15 +28,34 @@ export default function FormSignUp({ errors, touched }: FormProps) {
           htmlFor="lastName"
           className="block text-slate-700 text-sm font-bold mb-2"
         >
-          Last name
+          Last Name
         </label>
         <Field
           name="lastName"
+          type="text"
           className="shadow appearance-none border rounded w-full py-2 px-3 text-slate-700 leading-tight focus:shadow-outline"
+          placeholder="Esteban"
         />
-        {errors.name && touched.lastName ? (
+        {errors.lastName && touched.lastName ? (
           <ErrorSpan name={errors.lastName} />
         ) : null}
+
+        <label
+          htmlFor="phone"
+          className="block text-slate-700 text-sm font-bold mb-2"
+        >
+          Phone
+        </label>
+        <Field
+          name="phone"
+          type="phone"
+          className="shadow appearance-none border rounded w-full py-2 px-3 text-slate-700 leading-tight focus:shadow-outline"
+          placeholder="23123"
+        />
+        {errors.phone && touched.phone ? (
+          <ErrorSpan name={errors.phone} />
+        ) : null}
+
         <label
           htmlFor="email"
           className="block text-slate-700 text-sm font-bold mb-2"
@@ -42,31 +66,34 @@ export default function FormSignUp({ errors, touched }: FormProps) {
           name="email"
           type="email"
           className="shadow appearance-none border rounded w-full py-2 px-3 text-slate-700 leading-tight focus:shadow-outline"
+          placeholder="example@jestebandev.com"
         />
         {errors.email && touched.email ? (
           <ErrorSpan name={errors.email} />
         ) : null}
+
         <label
-          htmlFor="password"
+          htmlFor="company"
           className="block text-slate-700 text-sm font-bold mb-2"
         >
-          Password
+          Company
         </label>
+
         <Field
-          name="password"
-          type="password"
+          name="company"
+          type="text"
           className="shadow appearance-none border rounded w-full py-2 px-3 text-slate-700 leading-tight focus:shadow-outline"
+          placeholder="Company SAS"
         />
-        {errors.password && touched.password ? (
-          <ErrorSpan name={errors.password} />
+        {errors.company && touched.company ? (
+          <ErrorSpan name={errors.company} />
         ) : null}
 
-        <button
+        <input
           className="bg-slate-600 w-full mt-5 p-2 text-white hover:bg-slate-800"
           type="submit"
-        >
-          Create account
-        </button>
+          value="Create Client"
+        />
       </div>
     </Form>
   );

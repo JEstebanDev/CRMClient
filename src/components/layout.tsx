@@ -1,6 +1,10 @@
+import React, { useEffect } from "react";
+import router from "next/router";
 import Head from "next/head";
 import { useRouter } from "next/router";
+import Header from "./header";
 import SideBar from "./sideBar";
+
 type Props = {
   children: JSX.Element;
 };
@@ -8,6 +12,13 @@ type Props = {
 export default function Layout({ children }: Props) {
   // Hook de routing
   const { route } = useRouter();
+  useEffect(() => {
+    return () => {
+      if (localStorage.getItem("key") != null) {
+        router.push("/login");
+      }
+    };
+  }, []);
   return (
     <>
       <Head>
@@ -24,6 +35,7 @@ export default function Layout({ children }: Props) {
           <div className="sm:flex min-h-screen">
             <SideBar />
             <main className="sm:w-2/3 xl:w-4/5 sm:min-h-screen p-5">
+              <Header />
               {children}
             </main>
           </div>

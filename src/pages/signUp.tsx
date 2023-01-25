@@ -5,7 +5,7 @@ import { useMutation, gql } from "@apollo/client";
 import * as Yup from "yup";
 import Swal from "sweetalert2";
 
-import { NewUserType } from "@/types/newUser.type";
+import { NewUserType } from "@/types/user.type";
 
 import Layout from "../components/layout";
 import FormSignUp from "@/components/formSignUp";

@@ -32,6 +32,7 @@ const loginSchema = Yup.object().shape({
 export default function Login() {
   const [authenticUser] = useMutation(MUTATION_AUTH);
   const router = useRouter();
+
   const loginUser = async (dataLogin: LoginType) => {
     try {
       const { data } = await authenticUser({
