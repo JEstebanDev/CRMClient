@@ -49,7 +49,6 @@ export default function NewClient() {
         query: GET_ALL_CLIENT,
       });
       //rewrite the cache (the cache should never be updated)
-      console.log(getAllClients);
       cache.writeQuery({
         query: GET_ALL_CLIENT,
         data: { getAllClients: [...getAllClients, newClient] },
