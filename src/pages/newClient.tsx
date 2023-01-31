@@ -1,12 +1,12 @@
 import Layout from "@/components/layout";
 import React from "react";
 import { useMutation, gql } from "@apollo/client";
-import * as Yup from "yup";
 import { Formik } from "formik";
 import Swal from "sweetalert2";
 import FormClient from "@/components/formClient";
-import { ClientType, GetAllClientType } from "@/types/client.type";
+import { ClientType } from "@/types/client.type";
 import { GET_ALL_CLIENT } from "./client";
+import { clientSchema } from "@/schemas/clientSchema";
 
 const MUTATION_CREATE_CLIENT = gql`
   mutation newClient($input: clientInput) {
@@ -19,27 +19,6 @@ const MUTATION_CREATE_CLIENT = gql`
     }
   }
 `;
-
-const clientSchema = Yup.object().shape({
-  name: Yup.string()
-    .min(2, "Too Short!")
-    .max(10, "Too Long!")
-    .required("Required"),
-  lastName: Yup.string()
-    .min(2, "Too Short!")
-    .max(10, "Too Long!")
-    .required("Required"),
-  company: Yup.string()
-    .min(2, "Too Short!")
-    .max(10, "Too Long!")
-    .required("Required"),
-  email: Yup.string()
-    .min(2, "Too Short!")
-    .max(20, "Too Long!")
-    .email("Invalid email")
-    .required("Required"),
-  phone: Yup.number(),
-});
 
 export default function NewClient() {
   const [newClient] = useMutation(MUTATION_CREATE_CLIENT, {
