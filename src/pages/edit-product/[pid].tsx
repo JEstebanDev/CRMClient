@@ -1,4 +1,4 @@
-import FormProduct from "@/components/formProduct";
+import FormProduct from "@/components/product/formProduct";
 import Layout from "@/components/layout";
 import { productSchema } from "@/schemas/productSchema";
 import { ProductType } from "@/types/product.type";
@@ -34,7 +34,6 @@ export default function EditProduct() {
   //getIdFromURL rename to id
   const router = useRouter();
   //getDataFromGraphQL with id value
-  console.log(router.query);
   const { data }: any = useQuery(QUERY_GET_PRODUCT_ID, {
     variables: {
       id: router.query.pid,
@@ -47,17 +46,16 @@ export default function EditProduct() {
     try {
       const { data } = await UpdateProduct({
         variables: {
-          updateClientId: router.query.pid,
+          id: router.query.pid,
           input: dataProduct,
         },
       });
-      console.log(data);
       Swal.fire({
         icon: "success",
         title: "Perfect",
         text: "Product modified",
       });
-      // router.push("/product");
+      router.push("/product");
     } catch (error: any) {
       Swal.fire({
         icon: "error",

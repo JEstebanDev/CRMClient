@@ -5,7 +5,7 @@ import { gql, useMutation, useQuery } from "@apollo/client";
 import { Formik } from "formik";
 import { ClientType } from "@/types/client.type";
 import Swal from "sweetalert2";
-import FormClient from "@/components/formClient";
+import FormClient from "@/components/client/formClient";
 import { clientSchema } from "@/schemas/clientSchema";
 
 const MUTATION_UPDATE_CLIENT = gql`

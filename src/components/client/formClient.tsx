@@ -1,7 +1,7 @@
 import { NewClientProps } from "@/types/client.type";
 import { Form, Field } from "formik";
 import React from "react";
-import ErrorSpan from "./errorSpan";
+import ErrorSpan from "../errorSpan";
 
 export default function FormClient({ errors, touched, edit }: NewClientProps) {
   return (

@@ -1,4 +1,4 @@
-import FormProduct from "@/components/formProduct";
+import FormProduct from "@/components/product/formProduct";
 import Layout from "@/components/layout";
 import { productSchema } from "@/schemas/productSchema";
 import { ProductType } from "@/types/product.type";

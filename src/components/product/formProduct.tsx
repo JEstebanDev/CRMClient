@@ -1,14 +1,13 @@
 import { NewProductProps } from "@/types/product.type";
 import { Field, Form } from "formik";
 import React from "react";
-import ErrorSpan from "./errorSpan";
+import ErrorSpan from "../errorSpan";
 
 export default function FormProduct({
   errors,
   touched,
   edit,
 }: NewProductProps) {
-  console.log(edit);
   return (
     <Form
       action=""

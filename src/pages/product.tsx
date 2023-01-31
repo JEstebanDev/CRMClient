@@ -1,5 +1,5 @@
 import Layout from "@/components/layout";
-import TableProduct from "@/components/tableProduct";
+import TableProduct from "@/components/product/tableProduct";
 import { gql, useQuery } from "@apollo/client";
 import Link from "next/link";
 import React from "react";

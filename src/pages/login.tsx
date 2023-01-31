@@ -5,7 +5,7 @@ import { Formik } from "formik";
 
 import Layout from "../components/layout";
 import { useRouter } from "next/router";
-import FormLogin from "@/components/formLogin";
+import FormLogin from "@/components/user/formLogin";
 import { LoginType } from "@/types/login.type";
 import Swal from "sweetalert2";
 

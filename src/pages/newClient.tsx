@@ -3,7 +3,7 @@ import React from "react";
 import { useMutation, gql } from "@apollo/client";
 import { Formik } from "formik";
 import Swal from "sweetalert2";
-import FormClient from "@/components/formClient";
+import FormClient from "@/components/client/formClient";
 import { ClientType } from "@/types/client.type";
 import { GET_ALL_CLIENT } from "./client";
 import { clientSchema } from "@/schemas/clientSchema";

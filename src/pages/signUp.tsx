@@ -8,7 +8,7 @@ import Swal from "sweetalert2";
 import { NewUserType } from "@/types/user.type";
 
 import Layout from "../components/layout";
-import FormSignUp from "@/components/formSignUp";
+import FormSignUp from "@/components/user/formSignUp";
 
 const MUTATION_NEW_USER = gql`
   mutation NewUser($input: userInput) {

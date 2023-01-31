@@ -1,7 +1,7 @@
 import React from "react";
 import { Form, Field } from "formik";
-import ErrorSpan from "./errorSpan";
-import { FormProps } from "@/types/newUserProps.type";
+import ErrorSpan from "../errorSpan";
+import { FormProps } from "@/types/user.type";
 
 export default function FormSignUp({ errors, touched }: FormProps) {
   return (
