@@ -3,7 +3,7 @@ import { Form, Field } from "formik";
 import React from "react";
 import ErrorSpan from "./errorSpan";
 
-export default function FormClient({ errors, touched }: NewClientProps) {
+export default function FormClient({ errors, touched, edit }: NewClientProps) {
   return (
     <Form
       action=""
@@ -92,7 +92,7 @@ export default function FormClient({ errors, touched }: NewClientProps) {
         <input
           className="bg-slate-600 w-full mt-5 p-2 text-white hover:bg-slate-800"
           type="submit"
-          value="Create Client"
+          value={edit ? "Edit Client" : "Create Client"}
         />
       </div>
     </Form>

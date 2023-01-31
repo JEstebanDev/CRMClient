@@ -75,7 +75,7 @@ export default function NewClient() {
               }}
             >
               {({ errors, touched }) => (
-                <FormClient errors={errors} touched={touched} />
+                <FormClient errors={errors} touched={touched} edit={false} />
               )}
             </Formik>
           </div>

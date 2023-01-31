@@ -36,4 +36,5 @@ export type NewClientProps = {
     email: string;
     phone: string;
   }>;
+  edit: boolean;
 };

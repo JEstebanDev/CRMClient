@@ -36,7 +36,7 @@ const QUERY_GET_CLIENT_ID = gql`
 export default function EditClient() {
   //getIdFromURL rename to id
   const router = useRouter();
-
+  console.log(router.query);
   //getDataFromGraphQL with id value
   const { data }: any = useQuery(QUERY_GET_CLIENT_ID, {
     variables: {
@@ -87,7 +87,7 @@ export default function EditClient() {
           }}
         >
           {({ errors, touched }) => (
-            <FormClient errors={errors} touched={touched} />
+            <FormClient errors={errors} touched={touched} edit={true} />
           )}
         </Formik>
       </>
