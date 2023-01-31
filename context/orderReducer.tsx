@@ -22,10 +22,8 @@ export default (
     case AMOUNT_PRODUCT:
       return {
         ...state,
-        products: state.products.map((product: { id: any }) =>
-          product.id === action.payload.id
-            ? (product = action.payload)
-            : product
+        product: state.product.map((item) =>
+          item.id === action.payload.id ? (item = action.payload) : item
         ),
       };
     default:

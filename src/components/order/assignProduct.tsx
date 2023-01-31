@@ -10,7 +10,7 @@ export default function AssignProduct() {
   const { addProduct }: any = useContext(OrderContext);
   return (
     <>
-      <p className="mt-3 my-2 bg-white border-l-4 border-gray-800 text-gray-700 p-2 text-sm font-bold">
+      <p className="mt-3 my-2 bg-white border-l-4 border-slate-800 text-slate-700 p-2 text-sm font-bold">
         Assign products to the order
       </p>
       <Select

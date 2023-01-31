@@ -18,6 +18,12 @@ export default function NewOrder() {
             <AssignProduct />
             <ResumeOrder />
             <TotalOrder />
+            <button
+              type="button"
+              className="bg-slate-800 w-full p2 text-white font-bold hover:bg-slate-900"
+            >
+              Register Order
+            </button>
           </div>
         </div>
       </>
