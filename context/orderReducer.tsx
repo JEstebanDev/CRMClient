@@ -1,4 +1,9 @@
-import { SELECT_CLIENT, SELECT_PRODUCT, AMOUNT_PRODUCT } from "@/types";
+import {
+  SELECT_CLIENT,
+  SELECT_PRODUCT,
+  AMOUNT_PRODUCT,
+  UPDATE_TOTAL,
+} from "@/types";
 
 // eslint-disable-next-line import/no-anonymous-default-export
 export default (
@@ -24,6 +29,14 @@ export default (
         ...state,
         product: state.product.map((item) =>
           item.id === action.payload.id ? (item = action.payload) : item
+        ),
+      };
+    case UPDATE_TOTAL:
+      return {
+        ...state,
+        total: state.product.reduce(
+          (newTotal, product) => (newTotal += product.price * product.quantity),
+          0
         ),
       };
     default:
