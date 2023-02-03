@@ -21,7 +21,7 @@ export default function Header() {
 
   const logOut = () => {
     localStorage.removeItem("token");
-    route.push("/login");
+    route.push("/");
   };
 
   return (

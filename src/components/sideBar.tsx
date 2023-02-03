@@ -28,6 +28,21 @@ export default function SideBar() {
           </Link>
         </li>
       </nav>
+      <div className="sm:mt-10">
+        <p className="text-white text-2x my-4 font-white">Other options</p>
+      </div>
+      <nav className="mt-5 list-none">
+        <li className={route == "/topSeller" ? "bg-slate-500 p-3" : "p-3"}>
+          <Link href="/topSeller" className="text-slate-300 mb-2 block">
+            Top Seller
+          </Link>{" "}
+        </li>
+        <li className={route == "/topClient" ? "bg-slate-500 p-3" : "p-3"}>
+          <Link href="/topClient" className="text-slate-300 mb-2 block">
+            Top Client
+          </Link>{" "}
+        </li>
+      </nav>
     </aside>
   );
 }

@@ -1,12 +1,24 @@
-import { GET_ALL_CLIENT } from "@/pages/client";
 import { Client } from "@/types/client.type";
-import { useQuery } from "@apollo/client";
+import { gql, useQuery } from "@apollo/client";
 import OrderContext from "context/orderContext";
 import React, { useContext } from "react";
 import Select from "react-select";
 
+const GET_CLIENT_BY_SELLER = gql`
+  query GetClientBySeller {
+    getClientBySeller {
+      id
+      name
+      lastName
+      email
+      phone
+      company
+    }
+  }
+`;
+
 export default function AssignClient() {
-  const { data } = useQuery(GET_ALL_CLIENT);
+  const { data } = useQuery(GET_CLIENT_BY_SELLER);
   const { addClient }: any = useContext(OrderContext);
 
   return (
@@ -16,7 +28,7 @@ export default function AssignClient() {
       </p>
       <Select
         className="mt-3"
-        options={data != null && data.getAllClients}
+        options={data != null && data.getClientBySeller}
         onChange={(client) => addClient(client)}
         getOptionLabel={(client: Client) => client.name}
         getOptionValue={(client: Client) => client.id}
