@@ -2,13 +2,11 @@ import React from "react";
 import { Form, Field } from "formik";
 import ErrorSpan from "../errorSpan";
 import { LoginProps } from "@/types/login.type";
+import Link from "next/link";
 
 export default function FormLogin({ errors, touched }: LoginProps) {
   return (
-    <Form
-      action=""
-      className="bg-slate-200 rounded-3xl shadow-md px-8 pt-6 pb-8 mb-4"
-    >
+    <Form className="bg-slate-200 rounded-3xl shadow-md px-8 pt-6 pb-8 mb-4">
       <div>
         <label
           htmlFor="email"
@@ -42,6 +40,8 @@ export default function FormLogin({ errors, touched }: LoginProps) {
         {errors.password && touched.password ? (
           <ErrorSpan name={errors.password} />
         ) : null}
+
+        <Link href="/signUp">Do not have an account? Sign up</Link>
 
         <input
           className="bg-slate-600 w-full mt-5 p-2 text-white hover:bg-slate-800"

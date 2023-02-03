@@ -9,6 +9,7 @@ import OrderContext from "context/orderContext";
 import router from "next/router";
 import React, { useContext, useEffect, useState } from "react";
 import Swal from "sweetalert2";
+import { QUERY_GET_ORDERS } from "./order";
 
 const MUTATION_CREATE_ORDER = gql`
   mutation NewOrder($input: orderInput) {
@@ -16,38 +17,35 @@ const MUTATION_CREATE_ORDER = gql`
       id
       product {
         id
+        name
         quantity
       }
       status
       total
-      client
+      client {
+        company
+        lastName
+        name
+      }
       seller
     }
   }
 `;
 
-/*
-{
-  "input": {
-    "status": "CANCELLED",
-    "client": "63c74c7e1e754ce2765be401",
-    "total": 23,
-    "product": [
-      {
-        "id": "63c70b4632a158dd013b4459",
-        "quantity": 2
-      },
-      {
-        "id": "63c70d252dfb3ef693224e64",
-        "quantity": 5
-      }
-    ]
-  }
-}
-*/
-
 export default function NewOrder() {
-  const [NewOrder] = useMutation(MUTATION_CREATE_ORDER);
+  const [NewOrder] = useMutation(MUTATION_CREATE_ORDER, {
+    update(cache) {
+      const { getOrderBySeller }: any = cache.readQuery({
+        query: QUERY_GET_ORDERS,
+      });
+      cache.writeQuery({
+        query: QUERY_GET_ORDERS,
+        data: {
+          getOrderBySeller: [...getOrderBySeller, NewOrder],
+        },
+      });
+    },
+  });
   const { client, product, total }: InitialStateType = useContext(OrderContext);
   const [modifyClass, setModifyClass] = useState("");
 
@@ -61,7 +59,7 @@ export default function NewOrder() {
 
   const createOrder = () => {
     const productOrder = product.map(
-      ({ __typename, amount, name, price, ...itemProduct }) => itemProduct
+      ({ __typename, amount, price, ...itemProduct }) => itemProduct
     );
 
     Swal.fire({

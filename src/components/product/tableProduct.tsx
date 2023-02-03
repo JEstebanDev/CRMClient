@@ -1,5 +1,5 @@
 import { GET_ALL_PRODUCT } from "@/pages/product";
-import { DeleteProductType, GetAllProductType } from "@/types/product.type";
+import { GetAllProductType } from "@/types/product.type";
 import { gql, useMutation } from "@apollo/client";
 import Router from "next/router";
 import React, { useState } from "react";

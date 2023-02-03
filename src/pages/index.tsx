@@ -2,8 +2,6 @@ import React, { useState } from "react";
 import { useMutation, gql } from "@apollo/client";
 import * as Yup from "yup";
 import { Formik } from "formik";
-
-import Layout from "../components/layout";
 import { useRouter } from "next/router";
 import FormLogin from "@/components/user/formLogin";
 import { LoginType } from "@/types/login.type";
@@ -29,7 +27,7 @@ const loginSchema = Yup.object().shape({
     .required("Required"),
 });
 
-export default function Login() {
+export default function Index() {
   const [authenticUser] = useMutation(MUTATION_AUTH);
   const router = useRouter();
 
@@ -60,27 +58,25 @@ export default function Login() {
   };
   return (
     <>
-      <Layout>
-        <>
-          <h1 className="text-center text-2xl text-white">Login</h1>
-          <div className="flex justify-center mt-4">
-            <div className="w-full max-w-sm">
-              <Formik
-                initialValues={{
-                  email: "",
-                  password: "",
-                }}
-                validationSchema={loginSchema}
-                onSubmit={loginUser}
-              >
-                {({ errors, touched }) => (
-                  <FormLogin errors={errors} touched={touched} />
-                )}
-              </Formik>
-            </div>
+      <div className="bg-slate-800 min-h-screen flex flex-col justify-center">
+        <h1 className="text-center text-2xl text-white">Login</h1>
+        <div className="flex justify-center mt-4">
+          <div className="w-full max-w-sm">
+            <Formik
+              initialValues={{
+                email: "",
+                password: "",
+              }}
+              validationSchema={loginSchema}
+              onSubmit={loginUser}
+            >
+              {({ errors, touched }) => (
+                <FormLogin errors={errors} touched={touched} />
+              )}
+            </Formik>
           </div>
-        </>
-      </Layout>
+        </div>
+      </div>
     </>
   );
 }
